@@ -91,7 +91,7 @@ def exibir_menu(cpf=None):
             paciente_encontrado  = buscar_paciente_por_cpf(cpf)
 
             if pacientes:
-                print(f"Paciente encontrado!: Nome {paciente_encontrado['nome']}, CPF {paciente_encontrado[0]['cpf']}, Idade {pacientes[0]['idade']}")
+                print(f"Paciente encontrado!: Nome {paciente_encontrado['nome']}, CPF {paciente_encontrado['cpf']}, Idade {paciente_encontrado['idade']}")
             else:
                 print("Paciente não encontrado")
 

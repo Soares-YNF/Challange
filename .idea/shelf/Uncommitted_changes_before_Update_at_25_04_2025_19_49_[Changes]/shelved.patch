@@ -1,0 +1,77 @@
+Index: Menu.py
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>pacientes = []  # Lista para armazenar os pacientes\r\n\r\n# Função para cadastrar o paciente\r\ndef cadastrar_paciente():\r\n    nome = input(\"Digite o nome do paciente: \")\r\n    cpf = input(\"Digite o CPF do paciente: \")\r\n    idade = input(\"Digite a idade do paciente: \")\r\n\r\n    # Verificando se a idade é um número inteiro\r\n    while not idade.isdigit():\r\n        idade = input(\"Idade inválida! Digite uma idade válida: \")\r\n\r\n    idade = int(idade)  # Convertendo para inteiro\r\n\r\n    paciente = {\r\n        \"nome\": nome,\r\n        \"cpf\": cpf,\r\n        \"idade\": idade\r\n    }\r\n\r\n    pacientes.append(paciente)  # Adicionando paciente à lista\r\n\r\n    print(f\"Paciente {nome} cadastrado com sucesso!\")\r\n\r\n#Criando a lista de pacientes\r\ndef listar_pacientes():\r\n    if not pacientes:\r\n        print(\"Nenhum paciente cadastrado.\")\r\n    else:\r\n        print(\"\\n Lista de Pacientes: \")\r\n        for paciente in pacientes:\r\n            print(f\"Nome: {paciente['nome']}, CPF: {paciente['cpf']}, Idade: {paciente['idade']}\")\r\n\r\n#Criando a busca do paciente pelo CPF\r\ndef buscar_paciente_por_cpf(cpf):\r\n    for paciente in pacientes:\r\n        if paciente[\"cpf\"] == cpf:\r\n            return paciente\r\n    return None\r\n\r\n#Criando o Alterar Dados do paciente\r\ndef alterar_dados_paciente(cpf):\r\n    paciente_encontrado = buscar_paciente_por_cpf(cpf)\r\n    if paciente_encontrado:\r\n        nome = input(\"Digite o novo nome do paciente: \")\r\n        cpf = input(\"Digite o novo CPF do paciente: \")\r\n        Nova_idade = input(\"Digite a nova idade do paciente: \")\r\n        while not Nova_idade.isdigit():\r\n                        Nova_idade = input(\"Idade Inválida! Digite uma idade válida: \")\r\n        idade = int(Nova_idade)\r\n        paciente_encontrado[\"nome\"] = nome\r\n        paciente_encontrado[\"cpf\"] = cpf\r\n        paciente_encontrado[\"idade\"] = idade\r\n        print(\"Dados alterados com sucesso!\")\r\n        return paciente_encontrado\r\n\r\n        #Criando o Excluir paciente\r\ndef excluir_paciente(cpf):\r\n    paciente_encontrado = buscar_paciente_por_cpf(cpf)\r\n    pacientes.remove(paciente_encontrado)\r\n    if paciente_encontrado:\r\n        print(\"Paciente excluido com sucesso\")\r\n    else:\r\n        print(\"Paciente não encotrado\")\r\n\r\n\r\n# Função para exibir o menu\r\ndef exibir_menu(cpf=None):\r\n    opcao = \"\"\r\n    while opcao != \"0\":\r\n        print(\"\\n---Menu Do Hospital Das Clínicas---\")\r\n        print(\"1- Cadastrar Paciente\")\r\n        print(\"2- Listar Paciente\")\r\n        print(\"3- Buscar Paciente por CPF\")\r\n        print(\"4- Alterar Dados do Paciente\")\r\n        print(\"5- Excluir Paciente\")\r\n        print(\"0- Sair\")\r\n\r\n        opcao = input(\"Escolha uma opção: \")\r\n\r\n\r\n        if opcao == \"1\":\r\n            cadastrar_paciente()\r\n\r\n        elif opcao == \"2\":\r\n            listar_pacientes()\r\n\r\n\r\n        elif opcao == \"3\":\r\n            cpf = input(\"Digite o CPF que deseja procurar: \")\r\n            paciente_encontrado  = buscar_paciente_por_cpf(cpf)\r\n\r\n            if pacientes:\r\n                print(f\"Paciente encontrado!: Nome {paciente_encontrado[0]['nome']}, CPF {paciente_encontrado[0]['cpf']}, Idade {pacientes[0]['idade']}\")\r\n            else:\r\n                print(\"Paciente não encontrado\")\r\n\r\n        elif opcao == \"4\":\r\n            print(\"Alterando Dados do Paciente\")\r\n            cpf = input(\"Digite o CPF do paciente que deseja alterar: \")\r\n            paciente_encontrado = buscar_paciente_por_cpf(cpf)\r\n            if paciente_encontrado:\r\n                alterar_dados_paciente(cpf)\r\n            else:\r\n                print(\"Nenhum paciente encontrado!\")\r\n\r\n\r\n        elif opcao == \"5\":\r\n            print(\"Excluindo Paciente\")\r\n            cpf = input(\"Digite o CPF do paciente que deseja excluir: \")\r\n            excluir_paciente(cpf)\r\n\r\n\r\n        elif opcao == \"0\":\r\n            print(\"Saindo...\")\r\n\r\n        else:\r\n            print(\"Opção inválida! Tente uma opção válida.\")\r\n\r\n# Inicia o menu\r\nexibir_menu()
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Menu.py b/Menu.py
+--- a/Menu.py	(revision 9b8ee69eedb2c1cf70df6b34f06484cca87fe8d9)
++++ b/Menu.py	(date 1745621344906)
+@@ -3,7 +3,13 @@
+ # Função para cadastrar o paciente
+ def cadastrar_paciente():
+     nome = input("Digite o nome do paciente: ")
+-    cpf = input("Digite o CPF do paciente: ")
++    while True:
++        cpf = input("Digite o CPF do paciente: ")
++        cpf.replace(".", "").replace("-","")
++        if len(cpf)==11:
++            break
++        print("CPF invalido")
++
+     idade = input("Digite a idade do paciente: ")
+ 
+     # Verificando se a idade é um número inteiro
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"1116b77b-94bf-4aff-8c80-80715307efa9\" name=\"Changes\" comment=\"\" />\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\"><![CDATA[{\r\n  \"associatedIndex\": 5\r\n}]]></component>\r\n  <component name=\"ProjectId\" id=\"2vv6ZGgSPNtXal5ABVX8dsHWd2u\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-python-sdk-d7ad00fb9fc3-c546a90a8094-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-242.23726.102\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"1116b77b-94bf-4aff-8c80-80715307efa9\" name=\"Changes\" comment=\"\" />\r\n      <created>1745013253979</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1745013253979</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 9b8ee69eedb2c1cf70df6b34f06484cca87fe8d9)
++++ b/.idea/workspace.xml	(date 1745013587432)
+@@ -1,12 +1,30 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="ChangeListManager">
+-    <list default="true" id="1116b77b-94bf-4aff-8c80-80715307efa9" name="Changes" comment="" />
++    <list default="true" id="1116b77b-94bf-4aff-8c80-80715307efa9" name="Changes" comment="">
++      <change afterPath="$PROJECT_DIR$/.idea/Menu do Hospital das clinicas.iml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change afterPath="$PROJECT_DIR$/Menu.py" afterDir="false" />
++    </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+     <option name="LAST_RESOLUTION" value="IGNORE" />
+   </component>
++  <component name="FileTemplateManagerImpl">
++    <option name="RECENT_TEMPLATES">
++      <list>
++        <option value="Python Script" />
++      </list>
++    </option>
++  </component>
++  <component name="Git.Settings">
++    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
++  </component>
+   <component name="ProjectColorInfo"><![CDATA[{
+   "associatedIndex": 5
+ }]]></component>
+@@ -18,7 +36,8 @@
+   </component>
+   <component name="PropertiesComponent"><![CDATA[{
+   "keyToString": {
+-    "RunOnceActivity.ShowReadmeOnStart": "true"
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "git-widget-placeholder": "master"
+   }
+ }]]></component>
+   <component name="SharedIndexes">

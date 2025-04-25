@@ -3,7 +3,13 @@ pacientes = []  # Lista para armazenar os pacientes
 # Função para cadastrar o paciente
 def cadastrar_paciente():
     nome = input("Digite o nome do paciente: ")
-    cpf = input("Digite o CPF do paciente: ")
+    while True:
+        cpf = input("Digite o CPF do paciente: ")
+        cpf.replace(".", "").replace("-","")
+        if len(cpf)==11:
+            break
+        print("CPF invalido")
+
     idade = input("Digite a idade do paciente: ")
 
     # Verificando se a idade é um número inteiro
